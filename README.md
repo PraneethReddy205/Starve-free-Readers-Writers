@@ -2,6 +2,7 @@
 ## Problem Statement 
 To implement a starvation free solution for the classic Reader-Writers Problem.
 ## Pseudocode Code Solution
+```
 semaphore mutex;      // Binary Semaphore and initialized to 1  
 semaphore rs;         // Binary Semaphore and initialized to 0  
 semaphore ws;         // Binary Semaphore and initialized to 0  
@@ -67,8 +68,9 @@ if(aw==0&&wr>0){             // All writers are done and readers are waiting
 }  
 signal(mutex);  
 }  
-  
-Here,  
+ ```
+Here, 
+```
 wait(a){  
 while(a<=0)  
     ;// no-op  
@@ -78,3 +80,4 @@ while(a<=0)
 signal(a){  
 a++;  
 }  
+```

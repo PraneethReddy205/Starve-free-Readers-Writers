@@ -2,42 +2,42 @@
 ## Problem Statement 
 To implement a starvation free solution for the classic Reader-Writers Problem.
 ## Pseudocode Code Solution
-semaphore mutex; // Binary Semaphore and initialized to 1
-semaphore rs;    // Binary Semaphore and initialized to 0
-semaphore ws;    // Binary Semaphore and initialized to 0
-semaphore wr; // Counting Semaphore and initialized to 0(number of waiting readers)
-semaphore ar;  // Counting Semaphore and initialized to 0(number of active readers)
-semaphore ww; // Counting Semaphore and initialized to 0(number of waiting writers)
-semaphore aw;  // Counting Semaphore and initialized to 0(number of active writers)
-
-Reader(){
-wait(mutex);
-if(ww+aw==0){  // If there are no writers either active or waiting
-  signal(ar);     // Since there are no writers reader will become active
-  signal(rs);     // a semaphore that locks the reader from reading if rs=0 
-}
-else{
-signal(wr);   // Since writers are present wait in line
-}
-signal(mutex);
-
-wait(rs);     // if it is active reader then it will pass through else it will not
-
-  <CRITICAL SECTION>   // READING....
-
-wait(mutex);
-wait(ar); // reading is done so decrement
-
-if(ar==0&&ww>0){ // All readers are done and writers are waiting
-   while (ww>0)  // Allowing all waiting writers to enter
-        {
-           signal(ws);  // wake a writer;
-           signal(aw);  //  increment to active writers
-           wait(ww); // decrement to waiting writer
-       }
-}
-signal(mutex);
-}
+semaphore mutex; // Binary Semaphore and initialized to 1  
+semaphore rs;    // Binary Semaphore and initialized to 0  
+semaphore ws;    // Binary Semaphore and initialized to 0  
+semaphore wr; // Counting Semaphore and initialized to 0(number of waiting readers)  
+semaphore ar;  // Counting Semaphore and initialized to 0(number of active readers)  
+semaphore ww; // Counting Semaphore and initialized to 0(number of waiting writers)  
+semaphore aw;  // Counting Semaphore and initialized to 0(number of active writers)  
+  
+Reader(){  
+wait(mutex);  
+if(ww+aw==0){  // If there are no writers either active or waiting  
+  signal(ar);     // Since there are no writers reader will become active  
+  signal(rs);     // a semaphore that locks the reader from reading if rs=0  
+}  
+else{  
+signal(wr);   // Since writers are present wait in line  
+}  
+signal(mutex);  
+  
+wait(rs);     // if it is active reader then it will pass through else it will not  
+  
+  <CRITICAL SECTION>   // READING....  
+  
+wait(mutex);  
+wait(ar); // reading is done so decrement  
+  
+if(ar==0&&ww>0){ // All readers are done and writers are waiting  
+   while (ww>0)  // Allowing all waiting writers to enter  
+        {  
+           signal(ws);  // wake a writer;  
+           signal(aw);  //  increment to active writers  
+           wait(ww); // decrement to waiting writer  
+       }  
+}  
+signal(mutex);  
+}  
 
 Writer(){
 wait(mutex);
